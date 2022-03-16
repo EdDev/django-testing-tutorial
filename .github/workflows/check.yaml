@@ -16,11 +16,16 @@ jobs:
   format:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: psf/black@stable
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v3
         with:
-          options: "--check --diff -S"
-          version: "22.1.0"
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run black 
+        run: black --check --diff -S .
   linter:
     name: Linter
     runs-on: ubuntu-latest
