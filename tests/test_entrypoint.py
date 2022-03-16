@@ -20,5 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-def test_helloworld():
-    assert True
+def test_root_entrypoint(client):
+    response = client.get("/")
+    assert response.status_code == 200
