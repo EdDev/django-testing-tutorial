@@ -21,6 +21,20 @@ jobs:
         with:
           options: "--check --diff -S"
           version: "22.1.0"
+  linter:
+    name: Linter
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Run flake8
+      run: python -m flake8 --max-line-length 100
   test:
     name: Test
     runs-on: ubuntu-latest
