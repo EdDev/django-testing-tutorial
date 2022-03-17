@@ -27,3 +27,8 @@ class Member(models.Model):
     username = models.CharField(max_length=50)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
+
+
+class Role(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=255)
