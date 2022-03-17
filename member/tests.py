@@ -41,3 +41,9 @@ class TestMemberModel:
         assert member0.username == USERNAME
         assert member0.firstname == FIRSTNAME
         assert member0.lastname == LASTNAME
+
+    @pytest.mark.django_db()
+    def test_persist_member(self, member0):
+        member0.save()
+
+        assert member0 in models.Member.objects.all()
