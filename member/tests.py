@@ -23,6 +23,8 @@
 
 import pytest
 
+from django.core.exceptions import ValidationError
+
 from . import models
 
 
@@ -137,3 +139,13 @@ class TestMemberRoleModel:
         assert [expected_filtered_member_role] == list(
             models.MemberRole.filter(member=member2filter)
         )
+
+    def test_invalid_member_role(self):
+        NAME = "foo"
+        member = models.Member(username=NAME)
+        role = models.Role(name=NAME)
+
+        member_role = models.MemberRole(member=member, role=role)
+
+        with pytest.raises(ValidationError):
+            member_role.is_valid()
