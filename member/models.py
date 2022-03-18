@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -45,3 +46,9 @@ class MemberRole(models.Model):
         if role is not None:
             return MemberRole.objects.filter(role=role)
         return MemberRole.objects.all()
+
+    def is_valid(self):
+        if self.member.username == self.role.name:
+            raise ValidationError(
+                f"Member username can not match role name ({self.role.name})"
+            )
