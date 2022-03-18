@@ -83,6 +83,19 @@ def persisted_member_role0(db, member_role0):
     return member_role0
 
 
+@pytest.fixture
+def persisted_member_role_pool(persisted_member_role0):
+    mentor_role = models.Role(name="mentor", description="Mentor students")
+    beyond_member = models.Member(username="beyond")
+
+    new_member_role = models.MemberRole(member=beyond_member, role=mentor_role)
+    mentor_role.save()
+    beyond_member.save()
+    new_member_role.save()
+
+    return [persisted_member_role0, new_member_role]
+
+
 class TestMemberRoleModel:
     def test_new_member_role(self, member_role0):
         assert member_role0.member.username == USERNAME
@@ -105,3 +118,14 @@ class TestMemberRoleModel:
         persisted_member_role0.role.delete()
 
         assert persisted_member_role0 not in models.MemberRole.objects.all()
+
+    def test_filter_all(self, persisted_member_role_pool):
+        assert persisted_member_role_pool == list(models.MemberRole.filter())
+
+    def test_filter_by_role(self, persisted_member_role_pool):
+        expected_filtered_member_role = persisted_member_role_pool[1]
+        role2filter = expected_filtered_member_role.role
+
+        assert [expected_filtered_member_role] == list(
+            models.MemberRole.filter(role=role2filter)
+        )
