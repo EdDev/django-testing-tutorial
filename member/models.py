@@ -32,3 +32,8 @@ class Member(models.Model):
 class Role(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
+
+
+class MemberRole(models.Model):
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
