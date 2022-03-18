@@ -48,7 +48,10 @@ class MemberRole(models.Model):
         return MemberRole.objects.all()
 
     def is_valid(self):
-        if self.member.username == self.role.name:
+        if (
+            self.member.username in self.role.name
+            or self.role.name in self.member.username
+        ):
             raise ValidationError(
                 f"Member username can not match role name ({self.role.name})"
             )
