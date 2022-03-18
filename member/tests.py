@@ -75,6 +75,14 @@ def member_role0(member0, role0):
     return models.MemberRole(member=member0, role=role0)
 
 
+@pytest.fixture
+def persisted_member_role0(db, member_role0):
+    member_role0.member.save()
+    member_role0.role.save()
+    member_role0.save()
+    return member_role0
+
+
 class TestMemberRoleModel:
     def test_new_member_role(self, member_role0):
         assert member_role0.member.username == USERNAME
@@ -87,3 +95,13 @@ class TestMemberRoleModel:
         member_role0.save()
 
         assert member_role0 in models.MemberRole.objects.all()
+
+    def test_delete_ref_member(self, persisted_member_role0):
+        persisted_member_role0.member.delete()
+
+        assert persisted_member_role0 not in models.MemberRole.objects.all()
+
+    def test_delete_ref_role(self, persisted_member_role0):
+        persisted_member_role0.role.delete()
+
+        assert persisted_member_role0 not in models.MemberRole.objects.all()
