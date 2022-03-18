@@ -129,3 +129,11 @@ class TestMemberRoleModel:
         assert [expected_filtered_member_role] == list(
             models.MemberRole.filter(role=role2filter)
         )
+
+    def test_filter_by_member(self, persisted_member_role_pool):
+        expected_filtered_member_role = persisted_member_role_pool[1]
+        member2filter = expected_filtered_member_role.member
+
+        assert [expected_filtered_member_role] == list(
+            models.MemberRole.filter(member=member2filter)
+        )

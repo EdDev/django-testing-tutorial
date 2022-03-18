@@ -39,7 +39,9 @@ class MemberRole(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
 
     @staticmethod
-    def filter(role=None):
+    def filter(member=None, role=None):
+        if member is not None:
+            return MemberRole.objects.filter(member=member)
         if role is not None:
             return MemberRole.objects.filter(role=role)
         return MemberRole.objects.all()
