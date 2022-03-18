@@ -140,10 +140,13 @@ class TestMemberRoleModel:
             models.MemberRole.filter(member=member2filter)
         )
 
-    def test_invalid_member_role(self):
-        NAME = "foo"
-        member = models.Member(username=NAME)
-        role = models.Role(name=NAME)
+    @pytest.mark.parametrize(
+        "username, rolename",
+        [("foo", "foo"), ("foo", "fooprefix"), ("foo", "tailfoo"), ("midfoox", "foo")],
+    )
+    def test_invalid_member_role(self, username, rolename):
+        member = models.Member(username=username)
+        role = models.Role(name=rolename)
 
         member_role = models.MemberRole(member=member, role=role)
 
