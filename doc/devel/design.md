@@ -38,6 +38,7 @@ of working on a project.
 ## Proposal
 
 ### Definition of Users
+- Students
 
 ### User Stories
 
@@ -49,6 +50,10 @@ strategies and less on the mechanics of the Django framework and the
 pytest testing framework.
 
 ### Components
+The project structure is tightly coupled to the Django framework,
+exposing its basic components.
+
+![](beyond-compoents.png)
 
 ### Database Model
 The DB model for the `member` application is described in the following
@@ -59,3 +64,30 @@ diagram:
 ### Flows
 
 ## Implementation Phases
+In a classic application development, each phase aim to deliver
+a working solution which can be consumed by users.
+
+In this tutorial based project, we will aim for smaller steps,
+each resulting in a merged change.
+
+The table below lists development steps a team can take, mentioning
+which steps can be executed in parallel.
+
+| Step                          | Parallel | Remark                |
+|-------------------------------|----------|-----------------------|
+| New Repo                      |          |                       |
+| Containerized env             |          | with alias            |
+| Setup noop action             |          |                       |
+| Add formatter                 | P01      | black                 |
+| Add linter                    | P01      | flake8                |
+| Add pytest noop test          | P01      |                       |
+| Start new Django Project      | P01      |                       |
+| Start new Django App          |          | with `Member` table   |
+| Add the `Role` table          |          |                       |
+| Add the `MemberRole` table    |          |                       |
+| Add filter logic to model     | P02      | Filter MR by member   |
+| Add filter logic to model     | P02      | Filter MR by role     |
+| Add validation logic to model | P02      |                       |
+| Add *hello world* view        | P02      | Expose to entry point |
+| Add view to serve the model   | P02      | Not exposed           |
+| Expose app view               |          | List member-roles     |
