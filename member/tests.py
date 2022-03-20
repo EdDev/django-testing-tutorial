@@ -21,11 +21,14 @@
 # SOFTWARE.
 
 
+import json
+
 import pytest
 
 from django.core.exceptions import ValidationError
 
 from . import models
+from . import views
 
 
 USERNAME = "ed"
@@ -152,3 +155,13 @@ class TestMemberRoleModel:
 
         with pytest.raises(ValidationError):
             member_role.is_valid()
+
+
+class TestMemberRolesView:
+    def test_list_member_roles(self, persisted_member_role_pool, rf):
+        response = views.member_roles(rf.get("/"))
+
+        assert response.status_code == 200
+        assert json.loads(response.content) == {
+            mr.member.username: mr.role.name for mr in persisted_member_role_pool
+        }

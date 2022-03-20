@@ -22,7 +22,15 @@
 
 
 from django.http import HttpResponse
+from django.http import JsonResponse
+
+from . import models
 
 
 def index(request):
     return HttpResponse("Hello, beyond member!")
+
+
+def member_roles(request):
+    mroles = models.MemberRole.objects.all()
+    return JsonResponse({mr.member.username: mr.role.name for mr in mroles})
