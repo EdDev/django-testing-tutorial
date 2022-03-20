@@ -1,5 +1,5 @@
 # centos:stream8
-FROM quay.io/centos/centos@sha256:82b0e76b18388f04b38267120b1178f187b5cb0b170c37bcbc6d796114b8e7be
+FROM quay.io/centos/centos:stream8
 
 COPY requirements.txt /
 
