@@ -21,6 +21,6 @@
 # SOFTWARE.
 
 
-def test_root_entrypoint(client):
-    response = client.get("/")
+def test_member_app_entrypoint(client):
+    response = client.get("/member/")
     assert response.status_code == 200
