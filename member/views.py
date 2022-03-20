@@ -21,14 +21,13 @@
 # SOFTWARE.
 
 
-from django.http import HttpResponse
 from django.http import JsonResponse
 
 from . import models
 
 
 def index(request):
-    return HttpResponse("Hello, beyond member!")
+    return member_roles(request)
 
 
 def member_roles(request):
